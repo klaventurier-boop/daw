@@ -1,0 +1,373 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><title>Maquette 1 — fenêtre principale 1440×900</title>
+<link rel="stylesheet" href="svp.css">
+<style>
+  .hmeter{width:148px;height:10px;background:var(--bg-lcd);border:1px solid var(--line-hair);position:relative;overflow:hidden}
+  .hmeter .scale-bg{position:absolute;inset:0;
+    background:linear-gradient(to right,#35C46B 0 70%,#E8C547 70% 90%,#E5484D 90% 100%)}
+  .hmeter .mask{position:absolute;top:0;bottom:0;right:0;background:var(--bg-chrome)}
+  .hmeter .pk{position:absolute;top:0;bottom:0;width:1px;background:#E8EBEF}
+  .hmeter .rms{position:absolute;left:0;bottom:0;height:3px;background:rgba(232,235,239,.5)}
+  .ledclip{width:8px;height:6px;background:#2A3038;margin-bottom:3px}
+  .ledclip.on{background:var(--clip-led)}
+  .addrow{height:28px;display:flex;align-items:center;gap:6px;padding:0 8px;font-size:11px;color:var(--t3);
+    border-bottom:1px solid var(--line-hair);background:rgba(28,32,39,.5)}
+  .addrow .plus{width:14px;height:14px;border:1px solid var(--line-strong);border-radius:2px;display:flex;
+    align-items:center;justify-content:center;font-size:11px;line-height:1}
+  .lock{display:flex;align-items:center;gap:4px;font-size:10px;color:var(--t3)}
+</style></head>
+<body>
+<div class="app">
+
+  <!-- barre de titre -->
+  <div class="titlebar">
+    <div class="mark">SVP</div>
+    <div class="appname">Studio Voice Pro</div>
+    <div class="proj">Spot radio 30 s — v0.3&nbsp;&nbsp;·&nbsp;&nbsp;non enregistré</div>
+    <div class="tb-right">
+      <div class="tb-info">WASAPI (exclusif) · 48 000 Hz · 256 éch. · 8,2 ms</div>
+      <div class="wctl"><div>—</div><div>▢</div><div class="close">✕</div></div>
+    </div>
+  </div>
+
+  <!-- barre de transport -->
+  <div class="transport">
+    <div class="tgroup">
+      <div class="tb"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#E8EBEF" stroke-width="1.5"><path d="M11 3v10M4 3l5 5-5 5z"/></svg></div>
+      <div class="tb"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#E8EBEF" stroke-width="1.5"><rect x="3.5" y="3.5" width="9" height="9"/></svg></div>
+    </div>
+    <div class="tgroup">
+      <div class="tb on" style="width:36px;height:36px"><svg width="16" height="16" viewBox="0 0 16 16" fill="#08090B"><path d="M4 2.5l10 5.5-10 5.5z"/></svg></div>
+    </div>
+    <div class="tgroup">
+      <div class="tb rec" style="width:36px;height:36px"><div class="dot"></div></div>
+      <div class="tb sm"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#A9B2BF" stroke-width="1.5"><path d="M7.3 3.5h1.4l3.2 9H4.1z"/><path d="M8 7l2.6 3.2"/></svg></div>
+      <div class="tb sm on"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#08090B" stroke-width="1.4"><path d="M4.5 10.2V9a2.6 2.6 0 012.6-2.6h5"/><path d="M10.2 4.4L12.2 6.4 10.2 8.4"/><path d="M11.5 5.8V7a2.6 2.6 0 01-2.6 2.6H4"/><path d="M5.8 11.6L3.8 9.6 5.8 7.6"/></svg></div>
+      <div class="tb sm"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#A9B2BF" stroke-width="1.5"><path d="M8 3v10M4 8h8"/></svg></div>
+    </div>
+    <div class="sep"></div>
+    <div class="lcd">
+      <div class="val mono">00:00:42,318</div>
+      <div class="cap">POSITION · HH:MM:SS:MS</div>
+    </div>
+    <div class="cell" style="width:104px">
+      <div class="val num">009 · 03 · 240</div>
+      <div class="cap">MESURES</div>
+    </div>
+    <div class="cell">
+      <div class="val num">62,00</div>
+      <div class="cap">TEMPO (BPM)</div>
+    </div>
+    <div class="cell" style="width:64px">
+      <div class="val num">4/4</div>
+      <div class="cap">SIGNATURE</div>
+    </div>
+    <div class="sep"></div>
+    <div class="master">
+      <div>
+        <div class="lbl">CRÊTE<br>RMS</div>
+      </div>
+      <div class="pvr mono">P −3,2<br>R −12,6</div>
+      <div style="display:flex;align-items:flex-end;gap:3px">
+        <div class="ledclip on"></div>
+        <div class="hmeter">
+          <div class="scale-bg"></div>
+          <div class="mask" style="width:38%"></div>
+          <div class="rms" style="width:57%;background:rgba(232,235,239,.45)"></div>
+          <div class="pk" style="left:62%"></div>
+        </div>
+      </div>
+    </div>
+    <div style="margin-left:auto;display:flex;align-items:center;gap:6px">
+      <div class="tb sm"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#A9B2BF" stroke-width="1.5"><circle cx="8" cy="8" r="5.5"/><path d="M8 5v3.5l2.5 1.5"/></svg></div>
+    </div>
+  </div>
+
+  <div class="body">
+    <!-- navigateur -->
+    <div class="panel browser">
+      <div class="phead"><div class="t">Navigateur</div><div class="r">13 fichiers</div></div>
+      <div class="tabs"><div class="on">Projet</div><div>Disques</div><div>Effets</div></div>
+      <div class="tree">
+        <div class="node folder"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="#A9B2BF" stroke-width="1.2"><path d="M1 3.5h4l1 1h5v5H1z"/></svg>Spot_radio_30s</div>
+        <div class="node folder ind1"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="#A9B2BF" stroke-width="1.2"><path d="M1 3.5h4l1 1h5v5H1z"/></svg>Audio</div>
+        <div class="node sel ind2"><span class="wicon"><i style="height:6px"></i><i style="height:9px"></i><i style="height:4px"></i></span>Voix_lead_01.wav<span class="sz">24,8 Mo</span></div>
+        <div class="node ind2"><span class="wicon"><i style="height:5px"></i><i style="height:8px"></i><i style="height:3px"></i></span>Voix_lead_02.wav<span class="sz">31,2 Mo</span></div>
+        <div class="node ind2"><span class="wicon"><i style="height:4px"></i><i style="height:7px"></i><i style="height:5px"></i></span>Voix_lead_03.wav<span class="sz">28,6 Mo</span></div>
+        <div class="node ind2"><span class="wicon"><i style="height:3px"></i><i style="height:5px"></i><i style="height:4px"></i></span>Doublage_A.wav<span class="sz">12,1 Mo</span></div>
+        <div class="node ind2"><span class="wicon"><i style="height:2px"></i><i style="height:3px"></i><i style="height:2px"></i></span>Ambiance_rue.wav<span class="sz">88,4 Mo</span></div>
+        <div class="node ind2"><span class="wicon"><i style="height:6px"></i><i style="height:6px"></i><i style="height:4px"></i></span>Musique_62bpm.wav<span class="sz">64,0 Mo</span></div>
+        <div class="node ind2"><span class="wicon"><i style="height:5px"></i><i style="height:9px"></i><i style="height:4px"></i></span>Bruitage_01.wav<span class="sz">3,2 Mo</span></div>
+        <div class="node ind2"><span class="wicon"><i style="height:5px"></i><i style="height:6px"></i><i style="height:3px"></i></span>Reference_client.wav<span class="sz">51,7 Mo</span></div>
+        <div class="bsep"></div>
+        <div class="node folder ind1"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="#A9B2BF" stroke-width="1.2"><path d="M1 3.5h4l1 1h5v5H1z"/></svg>Exports</div>
+        <div class="node ind2"><span class="wicon"><i style="height:4px"></i><i style="height:6px"></i><i style="height:3px"></i></span>Spot_30s_v2.wav<span class="sz">5,1 Mo</span></div>
+        <div class="bsep"></div>
+        <div class="node folder ind1"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="#A9B2BF" stroke-width="1.2"><path d="M1 3.5h4l1 1h5v5H1z"/></svg>Préréglages vocaux</div>
+        <div class="node ind2"><span class="wicon"><i style="height:3px"></i><i style="height:6px"></i><i style="height:3px"></i></span>Voix parlée — neutre<span class="sz">4</span></div>
+        <div class="node ind2"><span class="wicon"><i style="height:4px"></i><i style="height:7px"></i><i style="height:4px"></i></span>Voix parlée — chaude<span class="sz">3</span></div>
+      </div>
+    </div>
+
+    <!-- centre : arrangement + console -->
+    <div class="center">
+      <div class="arr">
+        <div class="rulerrow">
+          <div class="rulerleft">PISTES · 8&nbsp;&nbsp;|&nbsp;&nbsp;MESURES</div>
+          <div class="ruler" id="ruler"></div>
+        </div>
+        <div class="lanes" id="lanes"></div>
+        <div class="playhead" style="left:641px;top:8px"></div>
+      </div>
+
+      <!-- console de mixage (zone basse) -->
+      <div class="mixer">
+        <div class="mxhead">
+          <div class="t" style="font-size:11px;font-weight:600;letter-spacing:.6px;color:#A9B2BF;text-transform:uppercase">Mixage</div>
+          <div class="dim" style="font-size:10px">6 pistes · 1 bus · master</div>
+          <div style="margin-left:auto;display:flex;gap:8px;font-size:10px;color:#7B8492">
+            <span>Niveau 0 dB = −18 dBFS</span><span>·</span><span>Témoins maintenus jusqu'au clic</span>
+          </div>
+        </div>
+        <div class="strips" id="strips"></div>
+      </div>
+    </div>
+
+    <!-- rack d'effets -->
+    <div class="panel rack">
+      <div class="phead"><div class="t">Effets</div><div class="r">Voix lead</div></div>
+      <div class="rackbody">
+        <div class="sect">Chaîne d'insertion</div>
+        <div class="slot"><span class="n">1</span><span class="led"></span><span class="nm">Égaliseur vocal 3 bandes</span><span class="pr">Parlé</span></div>
+        <div class="slot"><span class="n">2</span><span class="led"></span><span class="nm">Compresseur</span><span class="pr">−4,0 dB</span></div>
+        <div class="slot"><span class="n">3</span><span class="led"></span><span class="nm">Dé-esseur</span><span class="pr">6,5 kHz</span></div>
+        <div class="slot"><span class="n">4</span><span class="led off"></span><span class="nm">Réverbération</span><span class="pr">Contour</span></div>
+        <div class="slot off"><span class="n">5</span><span class="led off"></span><span class="nm">Emplacement libre</span></div>
+
+        <div class="sect" style="margin-top:2px">Envois</div>
+        <div class="knobrow">
+          <div class="kcell"><span class="k">Réverb A</span><div class="knob a"></div><span class="v num">−9,5 dB</span></div>
+          <div class="kcell"><span class="k">Delay B</span><div class="knob"></div><span class="v num">−∞</span></div>
+        </div>
+
+        <div class="sect" style="margin-top:2px">Entrée &amp; monitoring</div>
+        <div class="infield">Micro 1<span class="v">WASAPI · canal 1</span><span class="chev">▾</span></div>
+        <div class="knobrow">
+          <div class="kcell"><span class="k">Gain d'entrée</span><div class="knob a"></div><span class="v num">+32,0 dB</span></div>
+          <div class="kcell"><span class="k">Monitoring</span>
+            <div style="width:34px;height:16px;border-radius:2px;background:#37D2B2;display:flex;align-items:center;justify-content:flex-end;padding:0 2px;margin:2px 0">
+              <div style="width:12px;height:12px;border-radius:1px;background:#08090B"></div></div>
+            <span class="v" style="font-size:10px;color:#A9B2BF">Activé</span></div>
+        </div>
+        <div class="sect" style="margin-top:4px">Valeur au survol (règle)</div>
+        <div class="tip mono num">−9,5 dB</div>
+        <div style="font-size:10px;color:#7B8492;line-height:1.45;margin-top:2px">
+          Infobulle 20 px, après 200 ms, chiffres tabulaires, au-dessus du contrôle survolé.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- pied -->
+  <div class="statusbar">
+    <span class="ok">● Moteur audio actif</span>
+    <span class="dim">|</span>
+    <span>WASAPI (exclusif) — Haut-parleurs (Realtek USB)</span>
+    <span class="dim">|</span>
+    <span class="mono">48 000 Hz · 256 éch.</span>
+    <span class="dim">|</span>
+    <span class="mono">24 bits</span>
+    <div class="r">
+      <span class="mono">CPU 12 %</span>
+      <span class="mono">Disque 4 %</span>
+      <span class="mono">Latence 8,2 ms</span>
+      <span class="dim">Enregistrement armé : Voix lead</span>
+    </div>
+  </div>
+</div>
+
+<script>
+/* --- règle temporelle : 16 mesures de 39 px --- */
+(function(){
+  const r = document.getElementById('ruler');
+  for (let i=0;i<16;i++){
+    const d = document.createElement('div');
+    d.className = 'bar' + ((i%4===0)?' major':'');
+    d.style.left = (i*39)+'px';
+    d.textContent = i+1;
+    r.appendChild(d);
+  }
+  const loop = document.createElement('div');
+  loop.className='looprange'; loop.style.left=(4*39)+'px'; loop.style.width=(12*39)+'px';
+  r.appendChild(loop);
+})();
+
+/* --- forme d'onde : barres verticales déterministes (aucune donnée audio réelle) ---
+   Barres de 2 px, pas de 3 px, comme un dessin de forme d'onde de DAW natif. */
+function waveform(seed, wpx, hpx, density){
+  let s = Math.abs(Math.round(seed*2654435761 % 2147483647)) || 12345;
+  const rnd = ()=>{ s = (s*16807) % 2147483647; return s/2147483647; };
+  const pitch = 3, barW = 2, mid = hpx/2;
+  const n = Math.max(4, Math.floor(wpx/pitch));
+  let out = '', silence = 0;
+  for (let i=0;i<n;i++){
+    if (i%7===0) silence = (rnd() < (density||0.28)) ? 1+Math.floor(rnd()*4) : 0;
+    let a;
+    if (silence>0){ silence--; a = 0.02; }
+    else {
+      const env = 0.45 + 0.55*Math.abs(Math.sin(i/11 + seed));
+      a = Math.min(1, Math.pow(rnd(),1.5)*env*0.9 + 0.08);
+    }
+    const h = Math.max(1, a*(mid-1)*2);
+    out += '<rect x="'+(i*pitch).toFixed(1)+'" y="'+(mid-h/2).toFixed(1)+'" width="'+barW+
+           '" height="'+h.toFixed(1)+'"/>';
+  }
+  return out;
+}
+
+/* --- données de la session (maquette) --- */
+const TRACKS = [
+ {n:'Voix lead',   c:'#37D2B2', db:'−2,0', pan:'C',  m:false,s:true, a:true,  seed:11, meter:[0.86,0.83],
+  clips:[[0,4.5,'Voix_lead_01',11],[4.5,4,'Voix_lead_02',23],[8.5,4.5,'Voix_lead_03',37,true]]},
+ {n:'Doublage',    c:'#5AA6F0', db:'−8,5', pan:'L24',m:false,s:false,a:false, seed:29, meter:[0.55,0.52],
+  clips:[[4,4,'Doublage_A',29]]},
+ {n:'Ambiance rue',c:'#E9A94C', db:'−18,0',pan:'C',  m:false,s:false,a:false, seed:43, meter:[0.38,0.40],
+  clips:[[0,16,'Ambiance_rue',43]]},
+ {n:'Musique lit', c:'#A78BFA', db:'−12,0',pan:'C',  m:false,s:false,a:false, seed:57, meter:[0.30,0.28],
+  clips:[[3.2,10.3,'Musique_62bpm',57]]},
+ {n:'Bruitages',   c:'#F07A6E', db:'−14,5',pan:'R18',m:false,s:false,a:false, seed:71, meter:[0,0],
+  clips:[[2,1.5,'Bruitage_01',71],[12,2,'Bruitage_02',83]]},
+ {n:'Réf. client', c:'#6BD5A8', db:'−20,0',pan:'C',  m:true, s:false,a:false, seed:97, meter:[0,0],
+  clips:[[0,16,'Reference_client',97]]},
+ {n:'Réserve A',   c:'#37D2B2', db:'−∞',   pan:'C',  m:false,s:false,a:false, seed:0,  meter:[0,0], clips:[]},
+ {n:'Réserve B',   c:'#37D2B2', db:'−∞',   pan:'C',  m:false,s:false,a:false, seed:0,  meter:[0,0], clips:[]}
+];
+
+/* --- lignes de pistes --- */
+function fpos(db){
+  const v = parseFloat(String(db).replace('−','-').replace(',','.'));
+  if (isNaN(v)) return 0;
+  return Math.max(0, Math.min(85, Math.round((v+24)/30*85)));
+}
+(function(){
+  const lanes = document.getElementById('lanes');
+  TRACKS.forEach((t,i)=>{
+    const row = document.createElement('div');
+    row.className = 'trow';
+    const head = document.createElement('div');
+    head.className = 'thead';
+    head.innerHTML =
+      '<div class="colorbar" style="background:'+t.c+'"></div>'+
+      '<div class="in">'+
+        '<div class="line1">'+
+          '<span class="idx">'+(i+1)+'</span>'+
+          '<span class="tname'+(t.m?' off':'')+'">'+t.n+'</span>'+
+          '<span class="ms">'+
+            '<span class="sq arm'+(t.a?'':'')+'" style="'+(t.a?'':'background:#22272F;border-color:#262C34')+'">'+(t.a?'<i></i>':'○')+'</span>'+
+            '<span class="sq'+(t.m?' mute':'')+'">M</span>'+
+            '<span class="sq'+(t.s?' solo':'')+'">S</span>'+
+          '</span>'+
+        '</div>'+
+        '<div class="line2">'+
+          '<div class="hfader"><b style="width:'+fpos(t.db)+'px"></b><i style="left:'+Math.max(0,fpos(t.db)-2)+'px"></i></div>'+
+          '<span class="dbv num">'+t.db+'</span>'+
+          '<div class="pan"></div><span class="panv num">'+t.pan+'</span>'+
+          '<span class="mmini">'+
+            '<i style="background:'+t.c+';height:'+Math.round(t.meter[0]*18)+'px"></i>'+
+            '<i style="background:'+t.c+';height:'+Math.round(t.meter[1]*18)+'px"></i>'+
+          '</span>'+
+        '</div>'+
+      '</div>';
+    const lane = document.createElement('div');
+    lane.className = 'lane';
+    (t.clips||[]).forEach(c=>{
+      const wpx = c[1]*39;
+      const cl = document.createElement('div');
+      cl.className = 'clip'+(c[4]?' sel':'');
+      cl.style.left = (c[0]*39)+'px';
+      cl.style.width = wpx+'px';
+      cl.style.background = 'linear-gradient(to bottom, '+t.c+'26, '+t.c+'0E)';
+      cl.innerHTML =
+        '<div class="hdr" style="background:'+t.c+'">'+c[2]+'<span class="fx">'+(c[4]?'sélectionné':'')+'</span></div>'+
+        '<svg class="wf" viewBox="0 0 '+wpx+' 34" preserveAspectRatio="none" fill="'+t.c+'" fill-opacity="0.95">'+
+          waveform(c[3], wpx, 34, i>=2?0.18:0.34)+'</svg>'+
+        '<div class="fade"></div><div class="fade r"></div>';
+      lane.appendChild(cl);
+    });
+    lane.style.borderBottom = '1px solid #262C34';
+    if (i%2) lane.classList.add('alt');
+    row.appendChild(head); row.appendChild(lane);
+    lanes.appendChild(row);
+  });
+  const add = document.createElement('div');
+  add.className='addrow';
+  add.innerHTML = '<span class="plus">+</span>Ajouter une piste';
+  lanes.appendChild(add);
+})();
+
+/* --- console de mixage --- */
+(function(){
+  const host = document.getElementById('strips');
+  const order = [0,1,2,3,4,5];
+  order.forEach(i=>{
+    const t = TRACKS[i];
+    const s = document.createElement('div');
+    s.className='strip';
+    const dbPos = {0:38,1:30,2:22,3:26,4:24,5:18}[i] || 38;
+    s.innerHTML =
+      '<div class="stcolor" style="background:'+t.c+'"></div>'+
+      '<div class="stname">'+t.n+'</div>'+
+      '<div class="stpan"><div class="pan"></div><span class="panv num" style="width:auto">'+t.pan+'</span></div>'+
+      '<div class="stms">'+
+        '<span class="sq'+(t.m?' mute':'')+'">M</span>'+
+        '<span class="sq'+(t.s?' solo':'')+'">S</span>'+
+      '</div>'+
+      '<div class="stfader">'+
+        '<div class="scale">'+
+          '<span style="top:0">0</span><span style="top:15%">−6</span><span style="top:35%">−12</span>'+
+          '<span style="top:62%">−30</span><span style="bottom:0">−60</span>'+
+        '</div>'+
+        '<div class="fader">'+
+          '<div class="rail"></div>'+
+          '<div class="fill" style="height:'+dbPos+'%"></div>'+
+          '<div class="cap" style="bottom:'+dbPos+'%"></div>'+
+        '</div>'+
+        '<div class="meters">'+
+          '<div class="mcol" style="height:100%">'+
+            (i===0?'<div class="cled on"></div>':'')+
+            '<div class="mfill" style="height:'+Math.round(t.meter[0]*88)+'%;background:linear-gradient(to top,#35C46B 0 70%,#E8C547 70% 90%,#E5484D 90% 100%)"></div>'+
+            '<div class="peak" style="bottom:'+Math.round(t.meter[0]*88+3)+'%"></div>'+
+          '</div>'+
+          '<div class="mcol" style="height:100%">'+
+            (i===0?'<div class="cled on"></div>':'')+
+            '<div class="mfill" style="height:'+Math.round(t.meter[1]*88)+'%;background:linear-gradient(to top,#35C46B 0 70%,#E8C547 70% 90%,#E5484D 90% 100%)"></div>'+
+            '<div class="peak" style="bottom:'+Math.round(t.meter[1]*88+3)+'%"></div>'+
+          '</div>'+
+        '</div>'+
+      '</div>'+
+      '<div class="stdb"><b class="num">'+t.db+'</b><span>dB</span></div>'+
+      '<div class="stmeter mono">P −3,2 &nbsp; R −12,6</div>';
+    host.appendChild(s);
+  });
+  // master
+  const m = document.createElement('div');
+  m.className='strip master';
+  m.innerHTML =
+    '<div class="stcolor" style="background:#E8EBEF"></div>'+
+    '<div class="stname" style="justify-content:center">MASTER</div>'+
+    '<div class="stpan"><span class="panv num" style="width:auto;color:#7B8492">BUS 1–2</span></div>'+
+    '<div class="stms"><span class="sq" style="background:#22272F">◉</span></div>'+
+    '<div class="stfader">'+
+      '<div class="scale"><span style="top:0">0</span><span style="top:15%">−6</span><span style="top:35%">−12</span><span style="top:62%">−30</span><span style="bottom:0">−60</span></div>'+
+      '<div class="fader"><div class="rail"></div><div class="fill" style="height:41%"></div><div class="cap" style="bottom:41%"></div></div>'+
+      '<div class="meters">'+
+        '<div class="mcol" style="height:100%"><div class="clip on"></div><div class="mfill" style="height:78%;background:linear-gradient(to top,#35C46B 0 70%,#E8C547 70% 90%,#E5484D 90% 100%)"></div><div class="peak" style="bottom:62%"></div></div>'+
+        '<div class="mcol" style="height:100%"><div class="clip on"></div><div class="mfill" style="height:74%;background:linear-gradient(to top,#35C46B 0 70%,#E8C547 70% 90%,#E5484D 90% 100%)"></div><div class="peak" style="bottom:58%"></div></div>'+
+      '</div>'+
+    '</div>'+
+    '<div class="stdb"><b class="num">−3,2</b><span>dB</span></div>'+
+    '<div class="stmeter mono">P −3,2 &nbsp; R −12,6</div>';
+  host.appendChild(m);
+})();
+</script>
+</body></html>

@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><title>Maquette 2 — console de mixage</title>
+<link rel="stylesheet" href="svp.css">
+<style>
+  body{background:var(--bg-void)}
+  .mx{width:1440px;height:900px;display:flex;flex-direction:column}
+  .mxtop{height:44px;flex:0 0 44px;background:var(--bg-chrome);border-bottom:1px solid var(--line-strong);
+    display:flex;align-items:center;padding:0 12px;gap:12px}
+  .mxtop .t{font-size:13px;font-weight:600}
+  .pill{height:24px;padding:0 8px;border:1px solid var(--line-hair);border-radius:2px;background:var(--bg-raised);
+    display:flex;align-items:center;font-size:11px;color:var(--t2)}
+  .pill.on{background:var(--accent);border-color:var(--accent);color:#08090B;font-weight:600}
+  .bank{display:flex;flex-direction:column;border-bottom:1px solid var(--line-hair);background:var(--bg-canvas)}
+  .grp{display:flex}
+  .grplabel{writing-mode:vertical-rl;transform:rotate(180deg);width:22px;flex:0 0 22px;background:var(--bg-chrome);
+    border-right:1px solid var(--line-hair);display:flex;align-items:center;justify-content:center;
+    font-size:10px;letter-spacing:.8px;color:var(--t3)}
+  .st{flex:1;min-width:0;background:var(--bg-panel);border-right:1px solid var(--line-hair);
+    display:flex;flex-direction:column;padding:0 6px 6px}
+  .st.bus{background:#15181E;flex:0 0 104px}
+  .st.mst{flex:0 0 152px;background:#14171C;border-left:1px solid var(--line-strong)}
+  .cbar{height:4px;margin:0 -6px 0}
+  .nm{height:24px;display:flex;align-items:center;gap:5px;font-size:11px;font-weight:600;color:var(--t1);
+    white-space:nowrap;overflow:hidden}
+  .nm .ix{font-size:10px;color:var(--t3);font-weight:400}
+  .ins{display:flex;flex-direction:column;gap:2px;margin:2px 0 4px}
+  .islot{height:18px;display:flex;align-items:center;gap:4px;background:var(--bg-raised);
+    border:1px solid var(--line-hair);border-radius:2px;padding:0 4px;font-size:10px;color:var(--t2)}
+  .islot .led{width:5px;height:5px}
+  .islot.e{border-style:dashed;color:var(--t4)}
+  .snd{display:flex;align-items:center;gap:4px;height:16px;font-size:10px;color:var(--t3)}
+  .snd .tr{flex:1;height:3px;background:var(--line-hair);position:relative;border-radius:2px}
+  .snd .tr b{position:absolute;left:0;top:0;height:3px;background:var(--accent);border-radius:2px}
+  .snd .vv{width:34px;text-align:right;font-size:10px;color:var(--t2)}
+  .panrow{height:36px;display:flex;align-items:center;justify-content:center;gap:6px;margin-top:2px}
+  .ms{display:flex;gap:3px;justify-content:center;height:20px;margin-bottom:2px}
+  .ms .sq{width:22px;height:18px}
+  .fw{flex:1;display:flex;justify-content:center;gap:6px;padding:6px 0 2px;min-height:0}
+  .sc{width:20px;position:relative;font-size:9px;color:var(--t3);font-family:Consolas,monospace;height:100%}
+  .sc span{position:absolute;right:0;transform:translateY(-50%)}
+  .fd{width:24px;position:relative}
+  .fd .rail{position:absolute;left:10px;top:0;bottom:0;width:4px;background:var(--line-hair);border-radius:2px}
+  .fd .fill{position:absolute;left:10px;width:4px;background:var(--accent);border-radius:2px}
+  .fd .cap{position:absolute;left:2px;width:20px;height:12px;border-radius:2px;background:#3A424C;
+    border-top:1px solid #4B5462}
+  .fd .cap::after{content:"";position:absolute;left:2px;right:2px;top:5px;height:1px;background:#0B0D10}
+  .mt{display:flex;gap:2px}
+  .mc{width:7px;background:var(--bg-lcd);border:1px solid var(--line-hair);position:relative}
+  .mf{position:absolute;left:0;right:0;bottom:0;background:linear-gradient(to top,#35C46B 0 70%,#E8C547 70% 90%,#E5484D 90% 100%)}
+  .pk{position:absolute;left:0;right:0;height:1px;background:rgba(232,235,239,.85)}
+  .cled{position:absolute;left:0;right:0;top:0;height:7px;background:var(--clip-led)}
+  .cled.off{background:#2A3038}
+  .val{height:18px;display:flex;align-items:baseline;justify-content:center;gap:2px;font-size:10px;color:var(--t3)}
+  .val b{font-size:12px;color:var(--t1);font-weight:600}
+  .pr{height:26px;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    font-family:Consolas,monospace;font-size:10px;color:var(--t3);line-height:1.15}
+  .foot{height:24px;flex:0 0 24px;background:var(--bg-chrome);border-top:1px solid var(--line-strong);
+    display:flex;align-items:center;padding:0 10px;gap:14px;font-size:11px;color:var(--t2)}
+</style></head>
+<body>
+<div class="mx">
+  <div class="mxtop">
+    <span class="mark">SVP</span><span class="t">Studio Voice Pro — Mixage</span>
+    <span class="pill">Tranches : 12</span><span class="pill">Largeur 104 px</span>
+    <span class="pill on">Inserts</span><span class="pill">Envois</span><span class="pill">Échelle dBFS</span>
+    <span style="margin-left:auto;font-size:11px;color:#A9B2BF">Niveau 0 dB = −18 dBFS · Témoins d'écrêtage maintenus jusqu'au clic</span>
+  </div>
+
+  <div class="bank" id="bank" style="flex:1"></div>
+
+  <div class="foot">
+    <span class="ok">● Moteur audio actif</span><span class="dim">|</span>
+    <span>WASAPI (exclusif) — 48 000 Hz · 256 éch. · 8,2 ms</span>
+    <div style="margin-left:auto;display:flex;gap:14px">
+      <span class="mono">CPU 18 %</span><span class="mono">Disque 4 %</span><span class="dim">6 pistes audio · 2 bus · master</span>
+    </div>
+  </div>
+</div>
+<script>
+const T = [
+ {n:'Voix lead',    c:'#37D2B2', db:-2,  pan:'C',   m:0,s:1, pk:0.88, ins:['Égaliseur vocal','Compresseur','Dé-esseur'], send:'−9,5'},
+ {n:'Doublage',     c:'#5AA6F0', db:-8.5,pan:'L24', m:0,s:0, pk:0.62, ins:['Égaliseur vocal','Compresseur',''], send:'−14,0'},
+ {n:'Ambiance rue', c:'#E9A94C', db:-18, pan:'C',   m:0,s:0, pk:0.44, ins:['Égaliseur vocal','',''], send:'−22,0'},
+ {n:'Musique lit',  c:'#A78BFA', db:-12, pan:'C',   m:0,s:0, pk:0.38, ins:['Compresseur','',''], send:'−18,0'},
+ {n:'Bruitages',    c:'#F07A6E', db:-14.5,pan:'R18',m:0,s:0, pk:0.30, ins:['','',''], send:'−∞'},
+ {n:'Réf. client',  c:'#6BD5A8', db:-20, pan:'C',   m:1,s:0, pk:0.52, ins:['','',''], send:'−∞'},
+ {n:'Réserve A',    c:'#37D2B2', db:-24, pan:'C',   m:0,s:0, pk:0.02, ins:['','',''], send:'−∞'},
+ {n:'Réserve B',    c:'#37D2B2', db:-24, pan:'C',   m:0,s:0, pk:0.02, ins:['','',''], send:'−∞'}
+];
+const BUS = [
+ {n:'Bus Voix',   c:'#37D2B2', db:-3, pan:'C', m:0,s:0, pk:0.80, ins:['Réverbération',''], send:'−∞'},
+ {n:'Bus Musique',c:'#A78BFA', db:-6, pan:'C', m:0,s:0, pk:0.55, ins:['Compresseur (bus)',''], send:'−∞'}
+];
+function pos(db){ return Math.max(3, Math.min(94, ((db+30)/34)*94 )); }
+function strip(t, i, cls){
+  const h = Math.round(t.pk*100);
+  const ins = t.ins.map((x,k)=> x
+    ? '<div class="islot"><span class="led"></span>'+x+'</div>'
+    : '<div class="islot e">emplacement libre</div>').join('');
+  return '<div class="st '+cls+'">'+
+    '<div class="cbar" style="background:'+t.c+'"></div>'+
+    '<div class="nm"><span class="ix">'+(cls==='bus'?'B':'')+(i+1)+'</span>'+t.n+'</div>'+
+    '<div class="ins">'+ins+'</div>'+
+    '<div class="snd"><span>Réverb A</span><span class="tr"><b style="width:'+(t.send==='−∞'?0:38)+'%"></b></span><span class="vv">'+t.send+'</span></div>'+
+    '<div class="snd"><span>Delay B</span><span class="tr"><b style="width:0"></b></span><span class="vv">−∞</span></div>'+
+    '<div class="panrow"><div class="pan" style="width:20px;height:20px;border-radius:10px"></div><span class="panv num" style="width:auto;font-size:10px;color:#A9B2BF">'+t.pan+'</span></div>'+
+    '<div class="ms"><span class="sq'+(t.m?' mute':'')+'">M</span><span class="sq'+(t.s?' solo':'')+'">S</span></div>'+
+    '<div class="fw">'+
+      '<div class="sc"><span style="top:0">0</span><span style="top:18%">−6</span><span style="top:41%">−12</span>'+
+      '<span style="top:70%">−30</span><span style="bottom:2px">−60</span></div>'+
+      '<div class="fd"><div class="rail"></div>'+
+        '<div class="fill" style="bottom:0;height:'+pos(t.db)+'%"></div>'+
+        '<div class="cap" style="bottom:'+pos(t.db)+'%"></div></div>'+
+      '<div class="mt">'+
+        '<div class="mc" style="height:100%"><div class="cled'+(t.pk>0.86?'':' off')+'"></div>'+
+          '<div class="mf" style="height:'+h+'%"></div><div class="pk" style="bottom:'+(h+3)+'%"></div></div>'+
+        '<div class="mc" style="height:100%"><div class="cled'+(t.pk>0.86?'':' off')+'"></div>'+
+          '<div class="mf" style="height:'+Math.max(0,h-4)+'%"></div><div class="pk" style="bottom:'+(h+1)+'%"></div></div>'+
+      '</div>'+
+    '</div>'+
+    '<div class="val"><b class="num">'+(t.db===0?'0,0':String(t.db).replace('-','−').replace('.',','))+'</b>dB</div>'+
+    '<div class="pr">P −'+(t.pk>0.86?'3,2':'9,4')+'<br>R −'+(t.pk>0.86?'12,6':'21,0')+'</div>'+
+  '</div>';
+}
+(function(){
+  const b = document.getElementById('bank');
+  let html = '<div class="grp" style="flex:1">';
+  html += '<div class="grplabel">PISTES AUDIO</div>';
+  T.forEach((t,i)=> html += strip(t,i,''));
+  html += '</div><div class="grp" style="flex:0 0 auto">';
+  html += '<div class="grplabel">BUS</div>';
+  BUS.forEach((t,i)=> html += strip(t,i,'bus'));
+  html += '<div class="st mst">'+
+    '<div class="cbar" style="background:#E8EBEF"></div>'+
+    '<div class="nm" style="justify-content:center">MASTER</div>'+
+    '<div class="ins"><div class="islot"><span class="led"></span>Limiteur de sortie</div>'+
+      '<div class="islot"><span class="led"></span>Mesure crête + RMS</div>'+
+      '<div class="islot e">emplacement libre</div></div>'+
+    '<div class="panrow"><span style="font-size:10px;color:#7B8492">SORTIE 1–2</span></div>'+
+    '<div class="ms"><span class="sq" style="width:48px;background:#22272F;color:#A9B2BF;font-size:9px">−18 dBFS</span></div>'+
+    '<div class="fw">'+
+      '<div class="sc"><span style="top:0">0</span><span style="top:18%">−6</span><span style="top:41%">−12</span><span style="top:70%">−30</span><span style="bottom:2px">−60</span></div>'+
+      '<div class="fd"><div class="rail"></div><div class="fill" style="bottom:0;height:88%"></div><div class="cap" style="bottom:88%"></div></div>'+
+      '<div class="mt">'+
+        '<div class="mc" style="height:100%;width:9px"><div class="cled"></div><div class="mf" style="height:82%"></div><div class="pk" style="bottom:85%"></div></div>'+
+        '<div class="mc" style="height:100%;width:9px"><div class="cled"></div><div class="mf" style="height:78%"></div><div class="pk" style="bottom:81%"></div></div>'+
+      '</div>'+
+    '</div>'+
+    '<div class="val"><b class="num">−3,2</b>dB</div>'+
+    '<div class="pr">P −3,2<br>R −12,6</div>'+
+  '</div>';
+  html += '<div style="flex:1;background:#101216;border-left:1px solid #262C34"></div></div>';
+  b.innerHTML = html;
+})();
+</script>
+</body></html>

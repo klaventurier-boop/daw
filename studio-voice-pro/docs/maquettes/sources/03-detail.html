@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><title>Maquette 3 — détail transport / tranche / vumètre</title>
+<link rel="stylesheet" href="svp.css">
+<style>
+  body{background:#0A0B0D}
+  .sheet{width:1440px;height:900px;position:relative}
+  .hd{height:44px;background:var(--bg-chrome);border-bottom:1px solid var(--line-strong);display:flex;align-items:center;
+    padding:0 16px;gap:12px}
+  .hd .t{font-size:13px;font-weight:600}
+  .hd .s{font-size:11px;color:var(--t3)}
+  .box{position:absolute;background:var(--bg-panel);border:1px solid var(--line-strong);border-radius:2px;overflow:hidden}
+  .cap{position:absolute;font-size:10px;letter-spacing:.6px;color:var(--t3);text-transform:uppercase;font-weight:600}
+  .z2{transform:scale(2);transform-origin:top left}
+  .z4{transform:scale(4);transform-origin:top left}
+  .note{position:absolute;font-size:11px;color:var(--t2);line-height:1.55}
+  .note b{color:var(--t1);font-weight:600}
+  .note .k{font-family:Consolas,monospace;color:var(--accent)}
+  .rule{position:absolute;background:var(--line-hair)}
+  /* mini transport (1x, agrandi par .z2) */
+  .tmini{display:flex;align-items:center;gap:8px;padding:10px;background:var(--bg-chrome)}
+  .tmini .tb{width:32px;height:32px;border-radius:3px;background:var(--bg-raised);border:1px solid var(--line-hair);
+    display:flex;align-items:center;justify-content:center}
+  .tmini .tb.on{background:var(--accent);border-color:var(--accent)}
+  .tmini .tb.rec{background:var(--rec);border-color:var(--rec)}
+  .tmini .dot{width:12px;height:12px;border-radius:6px;background:#08090B}
+  .tmini .lcd{width:170px;height:40px;background:var(--bg-lcd);border:1px solid var(--line-hair);border-radius:2px;
+    padding:3px 8px;display:flex;flex-direction:column;justify-content:center}
+  .tmini .lcd .v{font-size:22px;line-height:22px;letter-spacing:.5px}
+  .tmini .lcd .c{font-size:9px;color:var(--t3);letter-spacing:.6px}
+  .tmini .cell{width:92px;height:40px;background:var(--bg-panel);border:1px solid var(--line-hair);border-radius:2px;
+    padding:4px 8px;display:flex;flex-direction:column;justify-content:center}
+  .tmini .cell .v{font-size:13px;font-weight:600}
+  .tmini .cell .c{font-size:9px;color:var(--t3);letter-spacing:.6px}
+  /* tranche 1x */
+  .st1{width:104px;background:var(--bg-panel);display:flex;flex-direction:column;padding:0 6px 6px}
+  .st1 .cbar{height:4px;margin:0 -6px}
+  .st1 .nm{height:24px;display:flex;align-items:center;gap:4px;font-size:11px;font-weight:600}
+  .st1 .nm .ix{font-size:10px;color:var(--t3);font-weight:400}
+  .st1 .islot{height:18px;display:flex;align-items:center;gap:4px;background:var(--bg-raised);border:1px solid var(--line-hair);
+    border-radius:2px;padding:0 4px;font-size:10px;color:var(--t2);margin-bottom:2px}
+  .st1 .led{width:5px;height:5px;border-radius:3px;background:var(--accent)}
+  .st1 .snd{display:flex;align-items:center;gap:4px;height:16px;font-size:10px;color:var(--t3)}
+  .st1 .snd .tr{flex:1;height:3px;background:var(--line-hair);border-radius:2px;position:relative}
+  .st1 .snd .tr b{position:absolute;left:0;top:0;height:3px;background:var(--accent);border-radius:2px}
+  .st1 .snd .vv{width:34px;text-align:right;color:var(--t2)}
+  .st1 .panrow{height:36px;display:flex;align-items:center;justify-content:center;gap:6px}
+  .st1 .ms{display:flex;gap:3px;justify-content:center;height:20px}
+  .st1 .ms .sq{width:22px;height:18px}
+  .st1 .fw{flex:1;display:flex;justify-content:center;gap:6px;padding:6px 0 2px;min-height:0}
+  .st1 .sc{width:20px;position:relative;font-size:9px;color:var(--t3);font-family:Consolas,monospace;height:100%}
+  .st1 .sc span{position:absolute;right:0;transform:translateY(-50%)}
+  .st1 .fd{width:24px;position:relative}
+  .st1 .fd .rail{position:absolute;left:10px;top:0;bottom:0;width:4px;background:var(--line-hair);border-radius:2px}
+  .st1 .fd .fill{position:absolute;left:10px;width:4px;background:var(--accent);border-radius:2px;bottom:0}
+  .st1 .fd .cap{position:absolute;left:2px;width:20px;height:12px;border-radius:2px;background:#3A424C;border-top:1px solid #4B5462}
+  .st1 .fd .cap::after{content:"";position:absolute;left:2px;right:2px;top:5px;height:1px;background:#0B0D10}
+  .st1 .mt{display:flex;gap:2px}
+  .st1 .mc{width:7px;background:var(--bg-lcd);border:1px solid var(--line-hair);position:relative}
+  .st1 .mf{position:absolute;left:0;right:0;bottom:0;background:linear-gradient(to top,#35C46B 0 70%,#E8C547 70% 90%,#E5484D 90% 100%)}
+  .st1 .pk{position:absolute;left:0;right:0;height:1px;background:rgba(232,235,239,.85)}
+  .st1 .cled{position:absolute;left:0;right:0;top:0;height:7px;background:var(--clip-led)}
+  .st1 .val{height:18px;display:flex;align-items:baseline;justify-content:center;gap:2px;font-size:10px;color:var(--t3)}
+  .st1 .val b{font-size:12px;color:var(--t1);font-weight:600}
+  .st1 .pr{height:26px;display:flex;flex-direction:column;align-items:center;font-family:Consolas,monospace;
+    font-size:10px;color:var(--t3);line-height:1.15}
+  /* vumètre 1x (agrandi x4) */
+  .m1{display:flex;gap:2px;height:150px}
+  .m1 .mc{width:7px;background:var(--bg-lcd);border:1px solid var(--line-hair);position:relative}
+  .m1 .mf{position:absolute;left:0;right:0;bottom:0;background:linear-gradient(to top,#35C46B 0 70%,#E8C547 70% 90%,#E5484D 90% 100%)}
+  .m1 .pk{position:absolute;left:0;right:0;height:1px;background:rgba(232,235,239,.9)}
+  .m1 .cled{position:absolute;left:0;right:0;top:0;height:7px;background:var(--clip-led)}
+  .m1 .scale{width:26px;position:relative;font-size:9px;color:var(--t3);font-family:Consolas,monospace}
+  .m1 .scale span{position:absolute;right:0;transform:translateY(-50%)}
+  /* états */
+  .states{display:flex;gap:6px;align-items:center}
+  .sq{width:18px;height:18px;border-radius:2px;background:var(--bg-raised);border:1px solid var(--line-hair);
+    display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;color:var(--t2)}
+</style></head>
+<body>
+<div class="sheet">
+  <div class="hd"><span class="mark">SVP</span><span class="t">Détail des composants — agrandissements 2× et 4×</span>
+    <span class="s">Valeurs exactes : voir STYLE-GUIDE.md §4 à §6</span></div>
+
+  <!-- A : transport -->
+  <div class="cap" style="left:20px;top:56px">A — Barre de transport (×2)</div>
+  <div class="box" style="left:20px;top:72px;width:800px;height:128px">
+    <div class="z2" style="width:400px">
+      <div class="tmini">
+        <div class="tb"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#E8EBEF" stroke-width="1.5"><rect x="3.5" y="3.5" width="9" height="9"/></svg></div>
+        <div class="tb on" style="width:36px;height:36px"><svg width="16" height="16" viewBox="0 0 16 16" fill="#08090B"><path d="M4 2.5l10 5.5-10 5.5z"/></svg></div>
+        <div class="tb rec" style="width:36px;height:36px"><div class="dot"></div></div>
+        <div class="tb"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#A9B2BF" stroke-width="1.4"><path d="M4.5 10.2V9a2.6 2.6 0 012.6-2.6h5"/><path d="M10.2 4.4L12.2 6.4 10.2 8.4"/><path d="M11.5 5.8V7a2.6 2.6 0 01-2.6 2.6H4"/><path d="M5.8 11.6L3.8 9.6 5.8 7.6"/></svg></div>
+        <div class="tb"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#A9B2BF" stroke-width="1.5"><path d="M7.3 3.5h1.4l3.2 9H4.1z"/><path d="M8 7l2.6 3.2"/></svg></div>
+        <div class="lcd"><div class="v mono">00:00:42,318</div><div class="c">POSITION</div></div>
+        <div class="cell"><div class="v num">62,00</div><div class="c">TEMPO (BPM)</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="note" style="left:850px;top:64px;width:560px">
+    <b>Barre de titre 32 px · barre de transport 56 px.</b> Boutons 32 × 32 (lecture 36 × 36), rayon 3 px,
+    icônes 16 × 16 au trait de 1,5 px. Lecture active = aplat <span class="k">#37D2B2</span>, icône <span class="k">#08090B</span>.<br>
+    Afficheur de position : fond <span class="k">#0B0D10</span>, Consolas 22 px, chiffres tabulaires, 170 × 40 px.<br>
+    Cellules tempo / signature : 92 × 40, valeur 13 px SemiBold, libellé 9 px en <span class="k">#7B8492</span>.
+    Aucune animation : la lecture change l'état du bouton, rien d'autre ne bouge.
+  </div>
+
+  <!-- B : tranche de canal -->
+  <div class="cap" style="left:20px;top:222px">B — Tranche de canal (×2)</div>
+  <div class="box" style="left:20px;top:238px;width:224px;height:600px">
+    <div class="z2" style="width:104px">
+      <div class="st1">
+        <div class="cbar" style="background:#37D2B2"></div>
+        <div class="nm"><span class="ix">1</span>Voix lead</div>
+        <div class="islot"><span class="led"></span>Égaliseur vocal</div>
+        <div class="islot"><span class="led"></span>Compresseur</div>
+        <div class="islot" style="border-style:dashed;color:#626A76">emplacement libre</div>
+        <div class="snd"><span>Réverb A</span><span class="tr"><b style="width:38%"></b></span><span class="vv">−9,5</span></div>
+        <div class="snd"><span>Delay B</span><span class="tr"><b style="width:0"></b></span><span class="vv">−∞</span></div>
+        <div class="panrow"><div class="pan" style="width:20px;height:20px;border-radius:10px"></div><span class="panv num" style="width:auto;font-size:10px;color:#A9B2BF">C</span></div>
+        <div class="ms"><span class="sq">M</span><span class="sq solo">S</span></div>
+        <div class="fw">
+          <div class="sc"><span style="top:0">0</span><span style="top:18%">−6</span><span style="top:41%">−12</span><span style="top:70%">−30</span><span style="bottom:2px">−60</span></div>
+          <div class="fd"><div class="rail"></div><div class="fill" style="height:78%"></div><div class="cap" style="bottom:78%"></div></div>
+          <div class="mt">
+            <div class="mc" style="height:100%"><div class="cled"></div><div class="mf" style="height:82%"></div><div class="pk" style="bottom:85%"></div></div>
+            <div class="mc" style="height:100%"><div class="cled"></div><div class="mf" style="height:76%"></div><div class="pk" style="bottom:79%"></div></div>
+          </div>
+        </div>
+        <div class="val"><b class="num">−2,0</b>dB</div>
+        <div class="pr">P −3,2<br>R −12,6</div>
+      </div>
+    </div>
+  </div>
+  <div class="note" style="left:264px;top:238px;width:340px">
+    <b>Largeur 104 px, fond <span class="k">#171A20</span>.</b><br>
+    Liseré de couleur de piste 4 px en haut (identité visuelle de la piste).<br>
+    Inserts 18 px de haut, emplacement libre en pointillés <span class="k">#262C34</span>.<br>
+    Envois : rail 3 px + valeur tabulaire à droite.<br>
+    Pan 20 px, valeur « C / L24 / R18 ».<br>
+    M / S : 22 × 18, actifs en aplat (ambre <span class="k">#FFC64B</span> solo, violet <span class="k">#9B87F5</span> mute).<br>
+    Fader : rail 4 px, cap 20 × 12, valeur 12 px SemiBold sous le fader.<br>
+    Vumètre stéréo 7 px + 2 px de gouttière, témoin d'écrêtage 7 px de haut.<br>
+    Mesures P (crête) / R (RMS) en Consolas 10 px.
+  </div>
+
+  <!-- C : vumètre -->
+  <div class="cap" style="left:640px;top:222px">C — Vumètre + témoin d'écrêtage (×4)</div>
+  <div class="box" style="left:640px;top:238px;width:340px;height:600px">
+    <div class="z4" style="padding:10px;display:flex;gap:2px">
+      <div class="m1">
+        <div class="scale">
+          <span style="top:0">0</span><span style="top:10%">−6</span><span style="top:20%">−12</span>
+          <span style="top:30%">−18</span><span style="top:50%">−30</span><span style="bottom:0">−60</span>
+        </div>
+        <div class="mc"><div class="cled"></div><div class="mf" style="height:82%"></div><div class="pk" style="bottom:88%"></div></div>
+        <div class="mc"><div class="cled"></div><div class="mf" style="height:70%"></div><div class="pk" style="bottom:76%"></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="note" style="left:640px;top:660px;width:340px">
+    Échelle linéaire en dB de <b>−60 à 0 dBFS</b> sur la hauteur utile. Vert <span class="k">#35C46B</span> jusqu'à −18,
+    jaune <span class="k">#E8C547</span> jusqu'à −6, rouge <span class="k">#E5484D</span> ensuite.<br>
+    Crête maintenue (trait 1 px blanc) 1 500 ms puis −20 dB/s. Témoin d'écrêtage <span class="k">#FF2D55</span>
+    <b>maintenu jusqu'au clic</b>, jamais clignotant.
+  </div>
+
+  <!-- D : états -->
+  <div class="cap" style="left:1010px;top:222px">D — États des contrôles</div>
+  <div class="box" style="left:1010px;top:238px;width:410px;height:210px;padding:10px">
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <div class="states"><span style="width:74px;font-size:10px;color:#7B8492">REPOS</span><span class="sq">M</span><span class="sq">S</span>
+        <span class="tb" style="width:28px;height:28px"></span><span class="pill">Loop</span></div>
+      <div class="states"><span style="width:74px;font-size:10px;color:#7B8492">SURVOL</span>
+        <span class="sq" style="background:#2A3038;border-color:#39414C">M</span>
+        <span class="sq" style="background:#2A3038;border-color:#6B5F3A;color:#FFC64B">S</span>
+        <span class="tb" style="width:28px;height:28px;background:#2A3038;border-color:#39414C"></span></div>
+      <div class="states"><span style="width:74px;font-size:10px;color:#7B8492">ENFONCÉ</span>
+        <span class="sq" style="background:#333A44;border-color:#39414C">M</span>
+        <span class="sq" style="background:#333A44;border-color:#39414C">S</span>
+        <span class="tb" style="width:28px;height:28px;background:#333A44;border-color:#39414C"></span></div>
+      <div class="states"><span style="width:74px;font-size:10px;color:#7B8492">ACTIF</span>
+        <span class="sq mute">M</span><span class="sq solo">S</span>
+        <span class="sq" style="background:#FF4D5E;border-color:#FF4D5E"><i style="width:7px;height:7px;border-radius:4px;background:#08090B;display:block"></i></span>
+        <span class="sq" style="background:#37D2B2;border-color:#37D2B2;color:#08090B">✓</span></div>
+      <div class="states"><span style="width:74px;font-size:10px;color:#7B8492">DÉSACTIVÉ</span>
+        <span class="sq" style="background:#171A20;color:#626A76">M</span>
+        <span class="sq" style="background:#171A20;color:#626A76">S</span>
+        <span class="sq" style="width:56px;background:#171A20;color:#626A76;font-size:9px">−18 dBFS</span></div>
+      <div class="states"><span style="width:74px;font-size:10px;color:#7B8492">FOCUS</span>
+        <span class="sq" style="outline:2px solid #37D2B2;outline-offset:1px">M</span>
+        <span class="sq" style="outline:2px solid #37D2B2;outline-offset:1px">S</span></div>
+    </div>
+  </div>
+
+  <!-- E : infobulle -->
+  <div class="cap" style="left:1010px;top:466px">E — Valeur au survol (fader et bouton rotatif)</div>
+  <div class="box" style="left:1010px;top:482px;width:410px;height:120px;padding:10px;display:flex;gap:14px;align-items:flex-start">
+    <div style="position:relative;width:120px;height:80px">
+      <div class="tip mono num" style="position:absolute;left:26px;top:0">−6,0 dB</div>
+      <div style="position:absolute;left:52px;top:34px;width:4px;height:36px;background:#262C34;border-radius:2px"></div>
+      <div style="position:absolute;left:44px;top:44px;width:20px;height:12px;border-radius:2px;background:#3A424C;border-top:1px solid #4B5462"></div>
+    </div>
+    <div style="position:relative;width:80px;height:80px">
+      <div class="tip mono num" style="position:absolute;left:6px;top:0">L32</div>
+      <div style="position:absolute;left:26px;top:30px;width:20px;height:20px;border-radius:10px;border:3px solid #2E353E;border-top-color:#37D2B2;border-right-color:#37D2B2"></div>
+    </div>
+  </div>
+  <div class="note" style="left:1010px;top:614px;width:410px">
+    Après <b>200 ms</b> de survol : infobulle de 20 px de haut, 6 px au-dessus du contrôle, fond
+    <span class="k">#0B0D10</span>, bordure 1 px <span class="k">#39414C</span>, rayon 3 px, texte 11 px SemiBold
+    chiffres tabulaires. Elle reste affichée pendant le glisser et se met à jour ; elle disparaît au relâchement.
+    Aucun fondu.
+  </div>
+
+  <div class="note" style="left:20px;top:846px;width:800px;font-size:10px;color:#7B8492">
+    Note de rendu : ces agrandissements utilisent la police de secours du poste de production (Liberation Sans) ;
+    sur Windows 11 le rendu utilise Segoe UI Variable Text / Display et Consolas, avec des métriques légèrement différentes.
+  </div>
+</div>
+</body></html>
